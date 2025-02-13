@@ -1,10 +1,8 @@
-package com.example.javainstagramclone;
+package com.example.javainstagramclone.view;
 
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.graphics.Bitmap;
-import android.graphics.ImageDecoder;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -21,9 +19,6 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 
 import com.example.javainstagramclone.databinding.ActivityUploadBinding;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -101,7 +96,7 @@ public class UploadActivity extends AppCompatActivity {
                             firebaseFireStore.collection("Posts").add(postData).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                                 @Override
                                 public void onSuccess(DocumentReference documentReference) {
-                                    Intent intent=new Intent(UploadActivity.this,FeedActivity.class);
+                                    Intent intent=new Intent(UploadActivity.this, FeedActivity.class);
                                     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                                     startActivity(intent);
                                 }

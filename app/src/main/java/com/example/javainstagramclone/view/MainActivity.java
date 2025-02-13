@@ -1,4 +1,4 @@
-package com.example.javainstagramclone;
+package com.example.javainstagramclone.view;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -8,9 +8,6 @@ import android.widget.Toast;
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 
 import com.example.javainstagramclone.databinding.ActivityMainBinding;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -38,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
         //Daha önce giriş yapılmış mı kontrol et
         FirebaseUser user=auth.getCurrentUser();
         if(user!=null){
-            Intent intent=new Intent(MainActivity.this,FeedActivity.class);
+            Intent intent=new Intent(MainActivity.this, FeedActivity.class);
             startActivity(intent);
             finish();
         }
