@@ -44,6 +44,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    //Kullanıcı giriş yapmışsa FeedActivity'e yönlendir
     public void signInClicked(View view){
         String email=binding.email.getText().toString();
         String password=binding.password.getText().toString();
@@ -69,6 +70,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    //Kullanıcı kayıt olmuşsa FeedActivity'e yönlendir
     public void signUpClicked(View view){
         String email=binding.email.getText().toString();
         String password=binding.password.getText().toString();
