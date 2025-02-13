@@ -11,8 +11,10 @@ import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.example.javainstagramclone.R;
+import com.example.javainstagramclone.adapter.PostAdapter;
 import com.example.javainstagramclone.databinding.ActivityFeedBinding;
 import com.example.javainstagramclone.model.Post;
 import com.google.firebase.auth.FirebaseAuth;
@@ -20,6 +22,7 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
@@ -31,6 +34,7 @@ public class FeedActivity extends AppCompatActivity {
     private FirebaseAuth auth;
     private FirebaseFirestore firebaseFirestore;
     ArrayList<Post> postArrayList;
+    PostAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,10 +49,14 @@ public class FeedActivity extends AppCompatActivity {
         firebaseFirestore=FirebaseFirestore.getInstance();
         getData();
 
+        binding.recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        adapter=new PostAdapter(postArrayList);
+        binding.recyclerView.setAdapter(adapter);
+
     }
 
     public void getData(){
-        firebaseFirestore.collection("Posts").addSnapshotListener(new EventListener<QuerySnapshot>() {
+        firebaseFirestore.collection("Posts").orderBy("date", Query.Direction.DESCENDING).addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
             public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
                 if(error!=null){
@@ -67,6 +75,7 @@ public class FeedActivity extends AppCompatActivity {
                         postArrayList.add(post);
 
                     }
+                    adapter.notifyDataSetChanged();
                 }
             }
         });
