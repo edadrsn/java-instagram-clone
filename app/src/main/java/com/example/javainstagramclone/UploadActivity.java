@@ -33,7 +33,6 @@ public class UploadActivity extends AppCompatActivity {
     ActivityResultLauncher<Intent> activityResultLauncher;
     ActivityResultLauncher<String> permissionLauncher;
     Uri imageData;
-    Bitmap selectedImage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,30 +53,53 @@ public class UploadActivity extends AppCompatActivity {
     }
 
     public void selectImage(View view) {
+        if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.TIRAMISU){
+            if(ContextCompat.checkSelfPermission(this,Manifest.permission.READ_MEDIA_IMAGES)!=PackageManager.PERMISSION_GRANTED){
+                //İzin verilmedi izin isteme mantığını açıkla
+                if(ActivityCompat.shouldShowRequestPermissionRationale(this,Manifest.permission.READ_MEDIA_IMAGES)){
+                    Snackbar.make(view,"Permission needed for gallery",Snackbar.LENGTH_INDEFINITE).setAction("Give permission",new View.OnClickListener(){
+                        @Override
+                        public void onClick(View view){
+                            //İzin iste
+                            permissionLauncher.launch(Manifest.permission.READ_MEDIA_IMAGES);
+                        }
+                    }).show();
+                }else{
+                    //İzin verilmedi izin iste
+                    permissionLauncher.launch(Manifest.permission.READ_MEDIA_IMAGES);
+                }
+            }
+            else{
+                //İzin verildi galeriye git
+                Intent intentToGallery=new Intent(Intent.ACTION_PICK,MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                activityResultLauncher.launch(intentToGallery);
+            }
 
-       if(ContextCompat.checkSelfPermission(this, android.Manifest.permission.READ_EXTERNAL_STORAGE)!= PackageManager.PERMISSION_GRANTED){
-           //İzin alınamadı
-          //İzin isteme mantığı açıklansın mı?
-           if(ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.READ_EXTERNAL_STORAGE)){
-               Snackbar.make(view,"Permission needed for gallery",Snackbar.LENGTH_INDEFINITE).setAction("Give Permission",new View.OnClickListener(){
-                   @Override
-                   public void onClick(View view){
-                       //İziniste
-                          permissionLauncher.launch(Manifest.permission.READ_EXTERNAL_STORAGE);
-                   }
-               }).show();
-           }
-           else{
-               //İzin iste
-               permissionLauncher.launch(Manifest.permission.READ_EXTERNAL_STORAGE);
-           }
-       }
-       else{
-           //Galeriye git
-           Intent intentToGallery=new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-           activityResultLauncher.launch(intentToGallery);
+        }
+        else{
+            if(ContextCompat.checkSelfPermission(this,Manifest.permission.READ_EXTERNAL_STORAGE)!=PackageManager.PERMISSION_GRANTED){
+                //İzin verilmedi izin isteme mantığını açıkla
+                if(ActivityCompat.shouldShowRequestPermissionRationale(this,Manifest.permission.READ_EXTERNAL_STORAGE)){
+                    Snackbar.make(view,"Permission needed for gallery",Snackbar.LENGTH_INDEFINITE).setAction("Give permission",new View.OnClickListener(){
+                        @Override
+                        public void onClick(View view){
+                            //İzin iste
+                            permissionLauncher.launch(Manifest.permission.READ_EXTERNAL_STORAGE);
+                        }
+                    }).show();
+                }else{
+                    //İzin verilmedi izin iste
+                    permissionLauncher.launch(Manifest.permission.READ_EXTERNAL_STORAGE);
+                }
+            }
+            else{
+                //İzin verildi galeriye git
+                Intent intentToGallery=new Intent(Intent.ACTION_PICK,MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                activityResultLauncher.launch(intentToGallery);
+            }
 
-       }
+        }
+
 
     }
 
@@ -86,12 +108,13 @@ public class UploadActivity extends AppCompatActivity {
             @Override
             public void onActivityResult(ActivityResult result) {
                 if(result.getResultCode()==RESULT_OK){
-                    Intent intentForResult=result.getData();
-                    if(intentForResult!=null){
-                        imageData=intentForResult.getData();
+                    Intent intentFromResult=result.getData();
+                    if(intentFromResult!=null){
+                        imageData=intentFromResult.getData();
                         binding.imageView.setImageURI(imageData);
                     }
                 }
+
             }
         });
 
@@ -99,17 +122,20 @@ public class UploadActivity extends AppCompatActivity {
             @Override
             public void onActivityResult(Boolean result) {
                 if(result){
-                    //İzin verildi
+                    //İzin verildi galeriye git
                     Intent intentToGallery=new Intent(Intent.ACTION_PICK,MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
                     activityResultLauncher.launch(intentToGallery);
                 }
-                 else{
-                     Toast.makeText(UploadActivity.this,"Permission needed",Toast.LENGTH_SHORT).show();
+                else{
+                    Toast.makeText(UploadActivity.this,"Permission needed",Toast.LENGTH_SHORT).show();
                 }
+
             }
         });
 
     }
+
+
 
 }
 

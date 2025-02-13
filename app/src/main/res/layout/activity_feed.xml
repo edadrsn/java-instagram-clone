@@ -11,20 +11,19 @@
         android:id="@+id/myToolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        android:layout_marginTop="30dp"
         android:background="#4B164C"
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
         app:title="InstagramClone Java"
         app:titleTextColor="#DD88CF"
         tools:ignore="MissingConstraints"
         tools:layout_editor_absoluteX="0dp"
-        tools:layout_editor_absoluteY="50dp" />
+        tools:layout_editor_absoluteY="33dp" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"
         android:layout_width="match_parent"
         android:layout_height="637dp"
-        android:layout_marginTop="115dp"
+        android:layout_marginTop="100dp"
         app:layout_constraintTop_toTopOf="parent"
         tools:layout_editor_absoluteX="0dp" />
 </androidx.constraintlayout.widget.ConstraintLayout>
