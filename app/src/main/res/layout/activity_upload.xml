@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
+    android:background="#000000"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".view.UploadActivity">
@@ -11,9 +12,9 @@
         android:id="@+id/myToolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="25dp"
         android:layout_marginBottom="348dp"
-        android:background="#4B164C"
+        android:background="#3F51B5"
         app:layout_constraintBottom_toTopOf="@+id/commentText"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -21,7 +22,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
         app:title="InstagramClone Java"
-        app:titleTextColor="#DD88CF"
+        app:titleTextColor="#FFFFFF"
         tools:ignore="MissingConstraints" />
 
     <ImageView
@@ -57,11 +58,13 @@
 
     <EditText
         android:id="@+id/commentText"
-        android:layout_width="272dp"
-        android:layout_height="50dp"
+        android:layout_width="290dp"
+        android:layout_height="55dp"
         android:layout_marginBottom="40dp"
+        android:background="@drawable/rounded_edittext"
         android:ems="10"
-        android:hint="Enter Comment"
+        android:hint=" Enter Comment"
+        android:textColorHint="#878383"
         android:inputType="text"
         app:layout_constraintBottom_toTopOf="@+id/btnUpload"
         app:layout_constraintEnd_toEndOf="parent"
